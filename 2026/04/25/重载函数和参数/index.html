@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>函数重载和参数 | 白日梦</title><meta name="author" content="白云"><meta name="copyright" content="白云"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="函数一.函数重载 函数重载：函数名相同，参数列表不同   重载跟返回值没有关系： 12&gt;void fun(int a,int b)&gt;int fun(int a,int b,int c) 1234567891011121314151617181920&#x2F;&#x2F;void fun(int a,int b);&#x2F;&#x2F;void fun(int a,double b);&#x2F;&#x2F;void fun(double a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数重载和参数">
+<meta property="og:url" content="https://zsjjulian.github.io/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/index.html">
+<meta property="og:site_name" content="白日梦">
+<meta property="og:description" content="函数一.函数重载 函数重载：函数名相同，参数列表不同   重载跟返回值没有关系： 12&gt;void fun(int a,int b)&gt;int fun(int a,int b,int c) 1234567891011121314151617181920&#x2F;&#x2F;void fun(int a,int b);&#x2F;&#x2F;void fun(int a,double b);&#x2F;&#x2F;void fun(double a">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zsjjulian.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-04-25T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-25T14:24:56.568Z">
+<meta property="article:author" content="白云">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="函数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zsjjulian.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "函数重载和参数",
+  "url": "https://zsjjulian.github.io/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/",
+  "image": "https://zsjjulian.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-04-25T04:00:00.000Z",
+  "dateModified": "2026-04-25T14:24:56.568Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "白云",
+      "url": "https://zsjjulian.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zsjjulian.github.io/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '函数重载和参数',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/%E9%BB%84%E6%B3%89.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">白日梦</span></a><a class="nav-page-title" href="/"><span class="site-name">函数重载和参数</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">函数重载和参数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-25T04:00:00.000Z" title="发表于 2026-04-25 12:00:00">2026-04-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-25T14:24:56.568Z" title="更新于 2026-04-25 22:24:56">2026-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="一-函数重载"><a href="#一-函数重载" class="headerlink" title="一.函数重载"></a>一.函数重载</h2><blockquote>
+<p>函数重载：函数名相同，参数列表不同</p>
+</blockquote>
+<blockquote>
+<p>重载跟返回值没有关系：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function">&gt;<span class="type">int</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> c)</span></span></span><br></pre></td></tr></table></figure></blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//void fun(int a,int b);</span></span><br><span class="line"><span class="comment">//void fun(int a,double b);</span></span><br><span class="line"><span class="comment">//void fun(double a,int b);</span></span><br><span class="line"><span class="comment">//void fun(int a,int b,int c);</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">int</span> c[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a[<span class="number">5</span>]=c)</span><span class="comment">//用int* a=c也可以</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span>!=a)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout&lt;&lt;a[<span class="number">2</span>]&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">fun</span>(c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果：</span></span><br><span class="line"><span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>重载与默认参数冲突</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b=<span class="number">2</span>,<span class="type">int</span> c=<span class="number">12</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;a&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;b&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;a&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">fun</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">    <span class="built_in">fun</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fun</span>(<span class="number">1</span>);<span class="comment">//直接报错，两个fun都可传递</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二-函数参数"><a href="#二-函数参数" class="headerlink" title="二.函数参数"></a>二.函数参数</h2><blockquote>
+<p>c++函数有默认参数，设置默认  参数值   须从最右侧开始赋予，不能从左侧开始：void fun(int a,int b,int c&#x3D;2)</p>
+</blockquote>
+<h3 id="数组做参数"><a href="#数组做参数" class="headerlink" title="数组做参数"></a>数组做参数</h3><blockquote>
+<p>数组做参数本质是地址，数组名就是地址</p>
+</blockquote>
+<blockquote>
+<p>一维数组做参</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//紧挨着变量的一个[]会被解析成*,即p[]~~(*p)</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">(<span class="type">int</span>* p,<span class="type">int</span> len)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">(<span class="type">int</span>(*p)[<span class="number">5</span>],<span class="type">int</span> len)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun3</span><span class="params">(<span class="type">int</span>(&amp;p)[<span class="number">5</span>],<span class="type">int</span> len)</span></span>;<span class="comment">//数组的引用</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a[<span class="number">5</span>]=&#123;<span class="number">5</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="built_in">fun1</span>(a,<span class="number">2</span>);</span><br><span class="line">	<span class="built_in">fun2</span>(&amp;a,<span class="number">3</span>);</span><br><span class="line">	<span class="built_in">fun3</span>(a,<span class="number">4</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">(<span class="type">int</span>* p,<span class="type">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;p[len]&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">(<span class="type">int</span>(*p)[<span class="number">5</span>],<span class="type">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;(*p)[len]&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun3</span><span class="params">(<span class="type">int</span>(&amp;p)[<span class="number">5</span>],<span class="type">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;p[len]&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果：</span></span><br><span class="line"><span class="comment">//3</span></span><br><span class="line"><span class="comment">//8</span></span><br><span class="line"><span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>二维数组做参数同理</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">(<span class="type">int</span> p[<span class="number">2</span>][<span class="number">3</span>],<span class="type">int</span> i,<span class="type">int</span> j)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">(<span class="type">int</span>(*p)[<span class="number">2</span>][<span class="number">3</span>],<span class="type">int</span> i,<span class="type">int</span> j)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun3</span><span class="params">(<span class="type">int</span>(&amp;p)[<span class="number">2</span>][<span class="number">3</span>],<span class="type">int</span> i,<span class="type">int</span> j)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="指针做参数"><a href="#指针做参数" class="headerlink" title="指针做参数"></a>指针做参数</h3><blockquote>
+<p>指针参数的默认值可为NULL</p>
+</blockquote>
+<p>&#x2F;&#x2F;引用做参和指针做参，都是操作同一块空间，而普通变量类型做参，调用函数不是同一块空间</p>
+<blockquote>
+<p>引用做参</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span>&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    c=<span class="number">23</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a=<span class="number">12</span>;</span><br><span class="line">    <span class="built_in">fun</span>(a);</span><br><span class="line">    std::cout&lt;&lt;a&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>指针做参</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span>* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *p=<span class="number">23</span>;</span><br><span class="line">    std::cout&lt;&lt;*p&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a=<span class="number">12</span>;</span><br><span class="line">    <span class="built_in">fun</span>(&amp;a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;<span class="comment">//如果fun的参数只是int a，那么a的值是不会改变的</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数做参数"><a href="#函数做参数" class="headerlink" title="函数做参数"></a>函数做参数</h3><blockquote>
+<p>函数地址，函数指针</p>
+</blockquote>
+<blockquote>
+<p>&amp;fun&#x3D;&#x3D;fun,函数名就是函数地址</p>
+</blockquote>
+<blockquote>
+<p>函数类型（删去函数名）：<br>void (int a)</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">look</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;a&lt;&lt;<span class="string">&#x27; &#x27;</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sort</span><span class="params">(<span class="type">int</span> a[<span class="number">10</span>],<span class="type">int</span> len,<span class="type">void</span>(*p)(<span class="type">int</span>))</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">p</span>(a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a[<span class="number">10</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">    <span class="built_in">sort</span>(a,<span class="number">10</span>,look);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果：</span></span><br><span class="line"><span class="comment">//1 2 3 4 5 6 7 8 9 10</span></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zsjjulian.github.io">白云</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zsjjulian.github.io/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/">https://zsjjulian.github.io/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zsjjulian.github.io" target="_blank">白日梦</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/%E5%87%BD%E6%95%B0/">函数</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/25/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B3/" title="c++复合数据类型(3)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">c++复合数据类型(3)</div></div><div class="info-2"><div class="info-item-1">c++复合数据类型结构体 基本数据类型，数组，指针，引用都只能装单一类型的变量   定义  123456789101112131415161718192021222324252627282930#include &lt;iostream&gt;struct Node//(struct Node是类型名，struct是关键字)&#123;  char name[20];  unsigned int age;  double score;&#125;;//这整个 只是类型，不是变量，不占用空间//结构体类型的变量定义: // 类型名+变量名=初始化数据int main()&#123;  struct Node nol=&#123;&quot;张三&quot;,20,98&#125;;//1  Node nol=&#123;&quot;张三&quot;,20,98&#125;;//2  Node nol&#123;&quot;张三&quot;,20,98&#125;;//3  //上述三种都可使用  //输出  std::cout&lt;&lt;nol.name&lt;&lt;&#x2...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/04/25/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B3/" title="c++复合数据类型(3)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-25</div><div class="info-item-2">c++复合数据类型(3)</div></div><div class="info-2"><div class="info-item-1">c++复合数据类型结构体 基本数据类型，数组，指针，引用都只能装单一类型的变量   定义  123456789101112131415161718192021222324252627282930#include &lt;iostream&gt;struct Node//(struct Node是类型名，struct是关键字)&#123;  char name[20];  unsigned int age;  double score;&#125;;//这整个 只是类型，不是变量，不占用空间//结构体类型的变量定义: // 类型名+变量名=初始化数据int main()&#123;  struct Node nol=&#123;&quot;张三&quot;,20,98&#125;;//1  Node nol=&#123;&quot;张三&quot;,20,98&#125;;//2  Node nol&#123;&quot;张三&quot;,20,98&#125;;//3  //上述三种都可使用  //输出  std::cout&lt;&lt;nol.name&lt;&lt;&#x2...</div></div></div></a><a class="pagination-related" href="/2026/04/12/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B2/" title="c++复合数据类型(2)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-12</div><div class="info-item-2">c++复合数据类型(2)</div></div><div class="info-2"><div class="info-item-1">c++复合数据类型1.字符数组 存放字符型数据的数组叫字符数组  字符数组初始化：(1)用字符进行初始化1234567891011121314151617#include &lt;iostream&gt;using namespace std;int main()&#123;    char str[5]=&#123;&#x27;a&#x27;,&#x27;1&#x27;,&#x27;c&#x27;,&#x27;r&#x27;,&#x27;d&#x27;&#125;;    for(int i=0;i&lt;5;i++)    &#123;        cout&lt;&lt;str[i]&lt;&lt;endl;    &#125;    return 0;&#125;//运行结果//a//1//c//r//d (2)用字符串进行初始化1234567891011121314151617#include &lt;iostream&gt;using namespace std;int main()&#123;    char str[6]=&quot;a1crd&quot;;  ...</div></div></div></a><a class="pagination-related" href="/2026/04/11/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="c++复合数据类型(1)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-11</div><div class="info-item-2">c++复合数据类型(1)</div></div><div class="info-2"><div class="info-item-1">c++复合数据类型1.指针1.指针介绍 对于指针来说，它是存储某种数据类型空间的一种类型，操控 系统本身或者我们自己申请的空间，在32位操作系统中，无论它指向的是哪一块空间，无论空间里存储的什么结构的数据类型，它本身存储空间都是4字节，因为它也是一种数据类型，任何一种数据类型的存储空间都有占一些字节。   指针是一个变量，存储的是一个值的地址，而不是值本身，在显示地址时，用cout输出默认是十六进制的数,例如：  12345678910111213#include &lt;iostream&gt;using namespace std;int main()&#123;  int a=12;  int* p=&amp;a;  //此时p相当于拥有了a的地址,&amp;是取地址符，将a的地址存储在指针p里面  cout&lt;&lt;&quot;a的地址是：&quot;&lt;&lt;p&lt;&lt;endl&lt;&lt;&quot;a的值为：&quot;&lt;&lt;*p;  return 0;&#125;//运行结果://a的地址是：0xa4a37ffba4 //a的值为：...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">白云</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-number">1.1.</span> <span class="toc-text">一.函数重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">二.函数参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%81%9A%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">数组做参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%81%9A%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">指针做参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%81%9A%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.3.</span> <span class="toc-text">函数做参数</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/25/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B3/" title="c++复合数据类型(3)">c++复合数据类型(3)</a><time datetime="2026-04-25T04:00:00.000Z" title="发表于 2026-04-25 12:00:00">2026-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/25/%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%82%E6%95%B0/" title="函数重载和参数">函数重载和参数</a><time datetime="2026-04-25T04:00:00.000Z" title="发表于 2026-04-25 12:00:00">2026-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/12/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B2/" title="c++复合数据类型(2)">c++复合数据类型(2)</a><time datetime="2026-04-12T04:00:00.000Z" title="发表于 2026-04-12 12:00:00">2026-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/11/c++%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="c++复合数据类型(1)">c++复合数据类型(1)</a><time datetime="2026-04-11T04:00:00.000Z" title="发表于 2026-04-11 12:00:00">2026-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/29/cpp%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="c++基本数据类型">c++基本数据类型</a><time datetime="2026-03-29T04:00:00.000Z" title="发表于 2026-03-29 12:00:00">2026-03-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 白云</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
